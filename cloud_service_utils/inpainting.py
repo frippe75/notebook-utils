@@ -4,10 +4,11 @@
 import requests
 import base64
 import os
+import json
 import cv2
 import numpy as np
 
-# Hard co
+# Hard coded pod id
 RUNPOD_ENDPOINT_ID = "906cbtg1541h5c"
 
 def inpaint_image_via_faas(image=None, image_path=None, mask=None, mask_path=None, output_path="result.png", endpoint_id=RUNPOD_ENDPOINT_ID, debug=False):
