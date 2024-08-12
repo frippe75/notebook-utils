@@ -88,8 +88,8 @@ def inpaint_image_via_faas(image=None, image_path=None, mask=None, mask_path=Non
 
     # Parse the response
     response_json = response.json()
-    output_image_base64 = response_json.get("output_image", "")
-    stats = response_json.get("stats", {})
+    output_image_base64 = response_json.get("output").get("output_image", "")
+    stats = response_json.get("output").get("stats", {})
 
     if not output_image_base64:
         raise ValueError("No output image in the response.")
