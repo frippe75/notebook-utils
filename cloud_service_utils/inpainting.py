@@ -1,10 +1,7 @@
-# inpainting.py
-# This file contains the functions to interact with the inpainting FaaS service
-
+import time
 import requests
 import base64
 import os
-import json
 import cv2
 import numpy as np
 
@@ -69,11 +66,17 @@ def inpaint_image_via_faas(image=None, image_path=None, mask=None, mask_path=Non
         print(f"POST {endpoint_url}")
         print(f"Payload: {json.dumps(payload, indent=2)}")
 
+    # Start timing the entire request process
+    frontend_start_time = time.time()
+
     # Send the POST request
     response = requests.post(endpoint_url, headers={
         "Content-Type": "application/json",
         "Authorization": f"Bearer {api_key}"
     }, data=json.dumps(payload))
+
+    # Measure the total time taken for the request from the frontend perspective
+    frontend_total_time = time.time() - frontend_start_time
 
     if debug:
         print(f"Response Status Code: {response.status_code}")
@@ -84,13 +87,20 @@ def inpaint_image_via_faas(image=None, image_path=None, mask=None, mask_path=Non
 
     # Parse the response
     response_json = response.json()
-    output_image_base64 = response_json.get("output", "")
+    output_image_base64 = response_json.get("output_image", "")
+    stats = response_json.get("stats", {})
 
     if not output_image_base64:
         raise ValueError("No output image in the response.")
 
     # Decode the output image from base64
     output_image_data = base64.b64decode(output_image_base64)
+
+    # Display timing information
+    if debug:
+        print(f"Inference Time (Backend): {stats.get('inference_time', 'N/A')} seconds")
+        print(f"Overall Time (Backend): {stats.get('overall_time', 'N/A')} seconds")
+        print(f"Total Time (Frontend): {frontend_total_time:.2f} seconds")
 
     if image is not None or mask is not None:
         # Convert the output image data back to a cv2 image object
