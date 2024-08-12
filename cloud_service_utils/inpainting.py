@@ -4,6 +4,7 @@ import base64
 import os
 import cv2
 import numpy as np
+import json
 
 # Hard coded pod id
 RUNPOD_ENDPOINT_ID = "906cbtg1541h5c"
