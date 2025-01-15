@@ -1,6 +1,14 @@
 # Notebook Utils
 This repository contains utility functions for use within Jupyter notebooks. These utilities interact with various FaaS services, such as inpainting and segmentation.
 
+## Features
+- Inpainting Utility: Utilize FaaS services to perform image inpainting, filling in missing parts of an image based on a mask.
+- Segmentation Utility: Leverage FaaS services to segment images, identifying and isolating different parts of an image.
+- Environment Variable Configuration: Easy setup with environment variables for API keys and endpoint IDs.
+- Modular Design: Organized into specific modules for inpainting and segmentation, allowing for easy extension and maintenance.
+- Jupyter Notebook Integration: Designed to be used within Jupyter notebooks, making it ideal for data scientists and researchers.
+- Example Usage: Provides example code snippets to help users get started quickly.
+
 ## Structure
 - `cloud_service_utils/`: Contains specific implementations for inpainting and segmentation.
 
